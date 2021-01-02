@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import {
   UserSchema
 } from '../models/userModel';
@@ -33,6 +34,41 @@ export const register = (req, res) => {
       // Clear password when sending request to user
       user.hashPassword = undefined;
       return res.json(user);
+    }
+  })
+}
+
+// Login a User
+export const login = (req, res) => {
+  // Find user by email
+  User.findOne({
+    email: req.body.email
+  }, (err, user) => {
+    if (err) throw err;
+    // If user not found
+    if (!user) {
+      res.status(401).json({
+        message: 'User not found'
+      });
+      // if user is found
+    } else if (user) {
+      // check if password matches hashPassword
+      if (!user.comparePassword(req.body.password, user.hashPassword)) {
+        // if password does NOT match hashPassword
+        res.status(401).json({
+          message: 'Wrong password'
+        });
+        // if password matches hashPassword
+        // create a jwt token and sign it
+      } else {
+        return res.json({
+          token: jwt.sign({
+            email: user.email,
+            username: user.username,
+            _id: user.id
+          }, 'RESTFULLAPIs')
+        });
+      }
     }
   })
 }
