@@ -1,0 +1,34 @@
+{
+  "name": "nodejs-secure-by-design",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "14.15.3",
+    "npm": "6.14.9"
+  },
+  "keywords": [
+    "security",
+    "nodejs",
+    "express",
+    "mongodb",
+    "mongoose",
+    "server"
+  ],
+  "author": "Melvin Kisten",
+  "license": "GPL-2.0",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.11.9"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/node": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "nodemon": "^2.0.6"
+  }
+}
