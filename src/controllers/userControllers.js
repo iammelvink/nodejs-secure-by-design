@@ -1,9 +1,14 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
+import config from '../config';
 import jwt from 'jsonwebtoken';
 import {
   UserSchema
 } from '../models/userModel';
+
+const {
+  JWT_SECRET
+} = config;
 
 const User = mongoose.model('User', UserSchema);
 
@@ -66,7 +71,9 @@ export const login = (req, res) => {
             email: user.email,
             username: user.username,
             _id: user.id
-          }, 'RESTFULLAPIs')
+          }, JWT_SECRET, {
+            expiresIn: 3600 // 3600 seconds = 1 hour
+          })
         });
       }
     }
