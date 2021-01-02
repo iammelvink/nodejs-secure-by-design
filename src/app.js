@@ -6,7 +6,8 @@ import routes from './routes/crmRoutes';
 
 const {
   MONGO_URI,
-  MONGO_DB_NAME
+  MONGO_DB_NAME,
+  JWT_SECRET
 } = config;
 
 const app = express();
@@ -24,7 +25,7 @@ app.use((req, res, next) => {
   // check for JWT at index 0 in array
   if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'JWT') {
     // then verify the secret word
-    jsonwebtoken.verify(req.headers.authorization.split(' ')[1], 'RESTFULLAPIs', (err, decode) => {
+    jsonwebtoken.verify(req.headers.authorization.split(' ')[1], JWT_SECRET, (err, decode) => {
       // if err clear user
       req.user = decode;
       next();
