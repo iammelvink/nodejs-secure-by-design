@@ -1,19 +1,26 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
 const Schema = mongoose.Schema;
 
+// Create & export UserSchema
 export const UserSchema = new Schema({
   username: {
     type: String,
-    required: 'Enter a user name'
+    required: true
   },
   email: {
     type: String
   },
   hashPassword: {
     type: String,
-    required: 'Enter a password'
+    required: true
   }
 }, {
   timestamps: true
 });
+
+// Compare password with hashPassword
+UserSchema.methods.comparePassword = (password, hashPassword) => {
+  return bcrypt.compareSync(password, hashPassword);
+};
